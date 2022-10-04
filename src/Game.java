@@ -9,10 +9,10 @@ public class Game {
 	private final int LOSER_ROLL = 1;
 	
 	public Game(){
-		Player player1 = new GUIPlayer();
-		Player player2 = new ComputerPlayer();
-		die = new Random();
-		spinner = new Spinner();
+		this.player1 = new GUIPlayer();
+		this.player2 = new ComputerPlayer();
+		this.die = new Random();
+		this.spinner = new Spinner();
 	}
 	
 	/*
@@ -21,6 +21,7 @@ public class Game {
 	public void playGame(){
 		printStartGameMessage();
 		Player whoseTurn = player1;
+		
 		while(!winner()){
 			int roundScore = takeATurn(whoseTurn);
 			whoseTurn.addToScore(roundScore);
@@ -72,7 +73,11 @@ public class Game {
 	
 	// True if one of the players has won the game.
 	public boolean winner(){
-		return player1.hasWon() && player2.hasWon();
+		//return player1.hasWon() && player2.hasWon();
+		return player1.hasWon() || player2.hasWon();
+			
+		
+	
 	}
 	
 	/* 
