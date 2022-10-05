@@ -5,7 +5,7 @@ public class Game {
 	private Player player2;
 	private Random die;
 	private Spinner spinner;
-	private final String LOSER_SPIN = "grunt";
+	private final String LOSER_SPIN = "GRUNT";
 	private final int LOSER_ROLL = 1;
 	
 	public Game(){
@@ -49,15 +49,22 @@ public class Game {
 		boolean keepGoing = true;
 		printStartRoundMessage(whoseTurn);
 		while(keepGoing){
-			int roll = die.nextInt(7);
+			//1-6
+			int roll = die.nextInt(6 - 1) + 1;
 			String spin = spinner.spin();
 			System.out.println(roll+ " "+ spin);
 			
 			if(roll == LOSER_ROLL){
 				System.out.println("Lose a turn.");
+				if(spin.equals(LOSER_SPIN.toUpperCase())){
+					System.out.println("Too bad!  Lose all your points.");
+					whoseTurn.resetScore();
+					return 0;
+				}
 				return 0;
+				
 			}
-			else if(spin == LOSER_SPIN.toUpperCase()){
+			else if(spin.equals(LOSER_SPIN.toUpperCase())){
 				System.out.println("Too bad!  Lose all your points.");
 				whoseTurn.resetScore();
 				return 0;
