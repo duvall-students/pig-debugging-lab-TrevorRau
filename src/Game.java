@@ -5,14 +5,14 @@ public class Game {
 	private Player player2;
 	private Random die;
 	private Spinner spinner;
-	private final String LOSER_SPIN = "grunt";
+	private final String LOSER_SPIN = "GRUNT";
 	private final int LOSER_ROLL = 1;
 	
 	public Game(){
-		Player player1 = new GUIPlayer();
-		Player player2 = new ComputerPlayer();
-		die = new Random();
-		spinner = new Spinner();
+		this.player1 = new GUIPlayer();
+		this.player2 = new ComputerPlayer();
+		this.die = new Random();
+		this.spinner = new Spinner();
 	}
 	
 	/*
@@ -21,6 +21,7 @@ public class Game {
 	public void playGame(){
 		printStartGameMessage();
 		Player whoseTurn = player1;
+		
 		while(!winner()){
 			int roundScore = takeATurn(whoseTurn);
 			whoseTurn.addToScore(roundScore);
@@ -48,15 +49,22 @@ public class Game {
 		boolean keepGoing = true;
 		printStartRoundMessage(whoseTurn);
 		while(keepGoing){
-			int roll = die.nextInt(7);
+			//1-6
+			int roll = die.nextInt(6 - 1) + 1;
 			String spin = spinner.spin();
 			System.out.println(roll+ " "+ spin);
 			
 			if(roll == LOSER_ROLL){
 				System.out.println("Lose a turn.");
+				if(spin.equals(LOSER_SPIN.toUpperCase())){
+					System.out.println("Too bad!  Lose all your points.");
+					whoseTurn.resetScore();
+					return 0;
+				}
 				return 0;
+				
 			}
-			else if(spin == LOSER_SPIN.toUpperCase()){
+			else if(spin.equals(LOSER_SPIN.toUpperCase())){
 				System.out.println("Too bad!  Lose all your points.");
 				whoseTurn.resetScore();
 				return 0;
@@ -72,7 +80,11 @@ public class Game {
 	
 	// True if one of the players has won the game.
 	public boolean winner(){
-		return player1.hasWon() && player2.hasWon();
+		//return player1.hasWon() && player2.hasWon();
+		return player1.hasWon() || player2.hasWon();
+			
+		
+	
 	}
 	
 	/* 
